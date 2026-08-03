@@ -60,10 +60,12 @@ function authedPostRequest(
     ...extraHeaders,
   };
   if (authHeader !== undefined) headers.Authorization = authHeader;
+  const body = JSON.stringify({ email });
+  headers["content-length"] = body.length.toString();
   return new Request("http://localhost/api/waitlist", {
     method: "POST",
     headers,
-    body: JSON.stringify({ email }),
+    body,
   });
 }
 
