@@ -17,3 +17,8 @@
 **Vulnerability:** Next.js API routes could be vulnerable to memory exhaustion DoS attacks if they process excessively large JSON payloads without limits.
 **Learning:** `request.json()` loads the entire payload into memory before validation. Checking `Content-Length` headers early on the server and implementing `maxLength` on client-side inputs is necessary to drop oversized requests before allocating memory.
 **Prevention:** Enforce early `Content-Length` checks on Next.js API routes and `maxLength` attributes on client-side form inputs to prevent memory exhaustion and DoS attacks.
+
+## 2025-08-10 - DoS via Authentication Bypass on Payload Validation
+**Vulnerability:** The `/api/waitlist` endpoint checked `Content-Length` and parsed the JSON payload before verifying the authentication token. This could allow unauthenticated attackers to cause memory allocation or trigger regex evaluation on the JSON content (up to the content-length limit) simply by sending a request.
+**Learning:** Checking authentication and authorization *after* processing payloads or headers allows unauthenticated users to consume server resources, creating a Denial of Service (DoS) vulnerability.
+**Prevention:** Always perform authentication and authorization checks before processing request payloads, parsing JSON, or validating content length/types, dropping unauthenticated requests as early as possible.
