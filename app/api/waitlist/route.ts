@@ -14,6 +14,10 @@ function getStore(): WaitlistStore {
 }
 
 export async function POST(request: Request) {
+  if (!checkAuth(request)) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const contentLength = request.headers.get("content-length");
   if (!contentLength || !/^\d+$/.test(contentLength)) {
     return Response.json({ error: "Length Required" }, { status: 411 });
@@ -46,10 +50,6 @@ export async function POST(request: Request) {
 
   if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return Response.json({ error: "Invalid email" }, { status: 400 });
-  }
-
-  if (!checkAuth(request)) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
