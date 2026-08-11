@@ -1,5 +1,13 @@
 import { MOCKUP_DATA } from "@/lib/constants";
 
+// ⚡ Bolt Optimization: Hoist static array outside the component to prevent
+// unnecessary memory allocations and garbage collection on each render.
+const RISK_DISCIPLINE_METRICS = [
+  { label: "Rule adherence", value: 91, color: "bg-emerald-500/60" },
+  { label: "Avg. risk / trade", value: 74, color: "bg-accent/60" },
+  { label: "Overtrading alerts", value: 12, color: "bg-red-500/50" },
+];
+
 export function RightColumn() {
   return (
     <div className="hidden lg:flex col-span-3 flex-col gap-3">
@@ -44,11 +52,7 @@ export function RightColumn() {
           Risk &amp; Discipline
         </p>
         <div className="space-y-2">
-          {[
-            { label: "Rule adherence", value: 91, color: "bg-emerald-500/60" },
-            { label: "Avg. risk / trade", value: 74, color: "bg-accent/60" },
-            { label: "Overtrading alerts", value: 12, color: "bg-red-500/50" },
-          ].map((item) => (
+          {RISK_DISCIPLINE_METRICS.map((item) => (
             <div key={item.label}>
               <div className="flex justify-between mb-1">
                 <span className="text-[10px] text-white/40">{item.label}</span>
