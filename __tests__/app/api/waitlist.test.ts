@@ -55,15 +55,17 @@ function authedPostRequest(
   authHeader: string | undefined,
   extraHeaders: Record<string, string> = {},
 ): Request {
+  const bodyString = JSON.stringify({ email });
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    "Content-Length": Buffer.byteLength(bodyString).toString(),
     ...extraHeaders,
   };
   if (authHeader !== undefined) headers.Authorization = authHeader;
   return new Request("http://localhost/api/waitlist", {
     method: "POST",
     headers,
-    body: JSON.stringify({ email }),
+    body: bodyString,
   });
 }
 
