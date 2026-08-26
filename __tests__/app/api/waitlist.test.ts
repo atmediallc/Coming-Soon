@@ -62,8 +62,8 @@ function authedPostRequest(
   if (authHeader !== undefined) headers.Authorization = authHeader;
   return new Request("http://localhost/api/waitlist", {
     method: "POST",
-    headers,
     body: JSON.stringify({ email }),
+    headers: { ...headers, "Content-Length": String(Buffer.byteLength(JSON.stringify({ email }))) },
   });
 }
 
