@@ -12,3 +12,7 @@
 ## 2024-05-18 - Pre-calculating Tailwind Classes and Hoisting Arrays for Render Performance
 **Learning:** Running `cn()` (which uses `clsx` and `tailwind-merge`) inside a `.map()` loop during every React render cycle on static data wastes CPU cycles and significantly degrades performance. Similarly, re-creating static arrays inside a component causes unnecessary memory allocations and triggers garbage collection on each render.
 **Action:** Always pre-calculate complex Tailwind class strings and hoist static arrays (like configuration lists or steps) outside of the React component's render function when dealing with static data to ensure optimal backend/SSR performance.
+
+## 2026-08-25 - Pre-computing static mapped elements
+**Learning:** Pre-computing static map parameters (like colors and coordinates for SVG charts) out of React functional components prevents excessive CPU cycles inside `.map()` arrays during tight render loops. Also, removing duplicate `maxLength` properties avoids removing critical form constraints during automated linter fixes.
+**Action:** Hoist static derivation arrays (via `Array.map()`) to the module scope level rather than defining them inline within the JSX to save CPU cycles and garbage collection on each re-render.
