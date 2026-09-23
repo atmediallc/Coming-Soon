@@ -1,3 +1,13 @@
+// ⚡ Bolt Optimization: Hoist static array outside the component to prevent
+// unnecessary memory allocations and garbage collection on each render.
+const NAV_ICONS = [
+  "M3 12h18M3 6h18M3 18h18",
+  "M12 20V4M4 12l8-8 8 8",
+  "M3 3h18v18H3z",
+  "M12 3v9l4 2",
+  "M9 19V6l12-3v13",
+];
+
 export function Sidebar() {
   return (
     <nav
@@ -9,13 +19,7 @@ export function Sidebar() {
         <span className="text-[9px] font-black text-accent leading-none">TA</span>
       </div>
       {/* Nav icons */}
-      {[
-        "M3 12h18M3 6h18M3 18h18",
-        "M12 20V4M4 12l8-8 8 8",
-        "M3 3h18v18H3z",
-        "M12 3v9l4 2",
-        "M9 19V6l12-3v13",
-      ].map((d, i) => (
+      {NAV_ICONS.map((d, i) => (
         <div key={i} className="h-7 w-7 rounded-md bg-white/5 flex items-center justify-center" aria-hidden="true">
           <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-white/50" fill="none" stroke="currentColor" strokeWidth={2}>
             <path d={d} strokeLinecap="round" strokeLinejoin="round" />
